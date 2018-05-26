@@ -1,4 +1,3 @@
-<!--  Spring容器的主配置-->
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
@@ -9,7 +8,7 @@
      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
-
+    <!--  Spring容器的主配置-->
     <!-- 包扫描，扫描com.mmall 包下的一些注解：用作注入-->
     <context:component-scan base-package="com.mmall" annotation-config="true"/>
 

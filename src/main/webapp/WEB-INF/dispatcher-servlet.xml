@@ -1,4 +1,3 @@
-<!-- Spring MVC的配置-->
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
@@ -9,7 +8,7 @@
 	http://www.springframework.org/schema/mvc
 	http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-
+    <!-- Spring MVC的配置-->
     <!-- 包扫描，扫描controller注解-->
     <context:component-scan base-package="com.mmall" annotation-config="true"/>
 
@@ -24,7 +23,7 @@
                     </list>
                 </property>
             </bean>
-            <!-- 自动反序列化配置-->
+            <!-- jason序列化转换配置-->
             <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
                 <property name="supportedMediaTypes">
                     <list>
