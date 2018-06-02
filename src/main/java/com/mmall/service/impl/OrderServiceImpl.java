@@ -27,8 +27,10 @@ import com.mmall.vo.OrderItemVo;
 import com.mmall.vo.OrderProductVo;
 import com.mmall.vo.OrderVo;
 import com.mmall.vo.ShippingVo;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,7 @@ import java.util.*;
  * Created by zjx on 2018/5/24.
  */
 @Service("iOrderService")
+@Slf4j
 public class OrderServiceImpl implements IOrderService {
 
     private static AlipayTradeService tradeService;
@@ -618,6 +621,36 @@ public class OrderServiceImpl implements IOrderService {
             }
         }
         return ServerResponse.createByErrorMessage("订单不存在");
+    }
+
+    public void closeOrder(int hour) {
+        //查找当前时间之前的hour个小时，例如当前是20点，我们要找19点之前下单未付款的订单，然后取消这些订单
+        //所以closeDateTime便是19点
+        Date closeDateTime = DateUtils.addHours(new Date(),-hour);
+        //查找closeDateTime之前下单并且未付款的订单
+        List<Order> orderList = orderMapper.selectOrderStatusByCreateTime(Const.OrderStatusEnum.NO_PAY.getCode(),DateTimeUtil.dateToStr(closeDateTime));
+
+        for(Order order : orderList){
+            List<OrderItem> orderItemList = orderItemMapper.getByOrderNo(order.getOrderNo());
+            for(OrderItem orderItem : orderItemList){
+
+                //一定要用主键where条件，防止锁表。同时必须是支持MySQL的InnoDB。
+                Integer stock = productMapper.selectStockByProductId(orderItem.getProductId());
+
+                //考虑到已生成的订单里的商品，之后被删除的情况
+                if(stock == null){
+                    continue;
+                }
+                Product product = new Product();
+                product.setId(orderItem.getProductId());
+                //恢复库存数量
+                product.setStock(stock+orderItem.getQuantity());
+                productMapper.updateByPrimaryKeySelective(product);
+            }
+            //将该订单状态设置为已取消状态
+            orderMapper.closeOrderByOrderId(order.getId());
+            log.info("关闭订单OrderNo：{}",order.getOrderNo());
+        }
     }
 
 

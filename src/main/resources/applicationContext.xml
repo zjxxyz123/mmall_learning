@@ -3,18 +3,23 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="
-     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
-     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
     <!--  Spring容器的主配置-->
-    <!-- 包扫描，扫描com.mmall 包下的一些注解：用作注入-->
-    <context:component-scan base-package="com.mmall" annotation-config="true"/>
+    <!-- 包扫描，扫描com.mmall 包下的一些注解(除了controller注解)：用作注入-->
+    <context:component-scan base-package="com.mmall" annotation-config="true">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
 
-    <!--<context:annotation-config/>-->
     <!-- AOP的配置 -->
     <aop:aspectj-autoproxy/>
+
+    <!-- 二期新增：用于配置 Spring Schedule -->
+    <context:property-placeholder location="classpath:datasource.properties"/>
+    <task:annotation-driven/>
 
 
     <!-- 导入分支文件：applicationContext-datasource.xml-->

@@ -10,7 +10,7 @@
      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!-- 包扫描，扫描com.mmall 包下的一些注解：用作注入-->
-    <context:component-scan base-package="com.mmall" annotation-config="true"/>
+    <!--<context:component-scan base-package="com.mmall" annotation-config="true"/>-->
 
     <!-- 引用数据库配置文件-->
     <bean id="propertyConfigurer"
@@ -85,12 +85,12 @@
     </bean>
 
     <!-- 使用@Transactional进行声明式事务管理需要声明下面这行 -->
-    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
+    <!--<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />-->
     <!-- 事务管理 -->
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="rollbackOnCommitFailure" value="true"/>
-    </bean>
+    <!--<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">-->
+        <!--<property name="dataSource" ref="dataSource"/>-->
+        <!--<property name="rollbackOnCommitFailure" value="true"/>-->
+    <!--</bean>-->
 
 
 </beans>
