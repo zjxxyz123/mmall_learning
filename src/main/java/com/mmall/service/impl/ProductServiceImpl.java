@@ -111,7 +111,7 @@ public class ProductServiceImpl implements IProductService {
 
         //设置 ImageHost
         //为了防止硬编码，则将图片服务器的地址写入配置文件中
-        productDetailVo.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix","http://img.happymmall.com/"));
+        productDetailVo.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix","http://img.zhujx.net/"));
 
         //设置 ParentCategoryId
         Category category = categoryMapper.selectByPrimaryKey(product.getCategoryId());
@@ -148,7 +148,7 @@ public class ProductServiceImpl implements IProductService {
         productListVo.setId(product.getId());
         productListVo.setName(product.getName());
         productListVo.setCategoryId(product.getCategoryId());
-        productListVo.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix","http://img.happymmall.com/"));
+        productListVo.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix","http://img.zhujx.net/"));
         productListVo.setMainImage(product.getMainImage());
         productListVo.setPrice(product.getPrice());
         productListVo.setSubtitle(product.getSubtitle());
