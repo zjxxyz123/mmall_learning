@@ -1,5 +1,5 @@
 *.class
-*.properties
+
 
 #package ignore
 *.war
