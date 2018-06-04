@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 public class CookieUtil {
     //访问www.test.com，user.test.com等都是可以看到该cookie的
-    private final static String COOKIE_DOMAIN = ".test.com";
+    private final static String COOKIE_DOMAIN = ".zhujx.net";
     //是服务端要种到客户端的
     private final static String COOKIE_NAME = "mmall_login_token";
 
